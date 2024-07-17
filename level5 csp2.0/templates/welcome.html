@@ -1,0 +1,15 @@
+<!doctype html>
+<html>
+  <head>
+    <!-- Internal game scripts/styles, mostly boring stuff -->
+    <script src="{{ url_for('static', filename='game-frame.js') }}"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='game-frame-styles.css') }}" />
+  </head>
+ 
+  <body id="level5">
+    Welcome! Today we are announcing the much anticipated<br><br>
+    <img src="{{ url_for('static', filename='logos/level5.png') }}" /><br><br>
+    <a href="{{ url_for('main_page', path='signup', next='confirm') }}">Sign up</a> 
+    for an exclusive Beta.
+  </body>
+</html>

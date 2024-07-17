@@ -1,0 +1,36 @@
+<!doctype html>
+<html>
+  <head>
+    <!-- Internal game scripts/styles, mostly boring stuff -->
+    <script src="/static/game-frame.js" nonce="{{ nonce }}"></script>
+    <link rel="stylesheet" href="/static/game-frame-styles.css" />
+
+    <script nonce="{{ nonce }}">
+      function startTimer(seconds) {
+	
+        seconds = parseInt(seconds) || 3;
+        setTimeout(function() { 
+          window.confirm("Time is up!");
+          window.history.back();
+        }, seconds * 1000);
+      }
+
+      // Add event listener for the 'load' event on the image with a specific ID.
+      document.addEventListener('DOMContentLoaded', function() {
+	
+        document.getElementById('loading-gif').addEventListener('load', function() {
+	  
+          startTimer('{{ timer }}');
+        });
+      });
+    </script>
+  </head>
+  <body id="level4">
+    <img src="/static/logos/level4.png" />
+    <br>
+    <!-- Assign a specific ID to the image -->
+    <img id="loading-gif" src="/static/loading.gif" />
+    <br>
+    <div id="message">Your timer will execute in {{ timer }} seconds.</div>
+  </body>
+</html>

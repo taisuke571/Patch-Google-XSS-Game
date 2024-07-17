@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSP Test</title>
+    <!-- Example CSP header that blocks inline scripts -->
+      <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self';">
+</head>
+<body>
+
+<h2>CSP Test Page</h2>
+
+<!-- Inline script -->
+<script>
+    alert('This is an inline script. If you see this alert, CSP did not block it.');
+</script>
+
+<!-- JavaScript inside href -->
+<a href="javascript:alert('This is JavaScript inside href. If you see this alert, CSP did not block it12.');">Click me</a>
+
+<!-- External script -->
+<script src="external-script.js"></script>
+
+</body>
+</html>

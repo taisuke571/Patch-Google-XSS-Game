@@ -1,0 +1,16 @@
+<!doctype html>
+<html>
+  <head>
+    <script src="/static/game-frame.js"></script>
+    <link rel="stylesheet" href="/static/game-frame-styles.css" />
+    <script src="/static/timer-script.js"></script>
+  </head>
+  <body id="level4">
+    <img src="/static/logos/level4.png" />
+    <br>
+    <!-- Add a data-timer attribute to pass the timer value to the script -->
+    <img id="loading-gif" src="/static/loading.gif" data-timer="{{ timer }}" />
+    <br>
+    <div id="message">Your timer will execute in {{ timer }} seconds.</div>
+  </body>
+</html>

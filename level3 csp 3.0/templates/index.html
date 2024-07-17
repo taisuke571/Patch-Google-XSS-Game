@@ -1,0 +1,83 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Security-Policy" content="
+        default-src 'none';
+        script-src 'strict-dynamic' 'nonce-random-value-here' 'self' https://ajax.googleapis.com;
+        style-src 'self';
+        img-src 'self';
+       
+    ">
+    <!-- Internal game scripts/styles, mostly boring stuff -->
+    <script nonce="random-value-here" src="{{ url_for('static', filename='game-frame.js') }}"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='game-frame-styles.css') }}" />
+
+    <!-- Load jQuery -->
+    <script nonce="random-value-here" src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+    <script nonce="random-value-here">
+        function chooseTab(num) {
+            var html = "Image " + parseInt(num) + "<br>";
+            html += "<img src='/static/level3/cloud" + num + ".jpg' />";
+            $('#tabContent').html(html);
+
+            window.location.hash = num;
+
+            var tabs = document.querySelectorAll('.tab');
+            for (var i = 0; i < tabs.length; i++) {
+                if (tabs[i].id == "tab" + parseInt(num)) {
+                    tabs[i].className = "tab active";
+                } else {
+                    tabs[i].className = "tab";
+                }
+            }
+
+            top.postMessage(self.location.toString(), "*");
+        }
+
+        window.onload = function () {
+            chooseTab(unescape(self.location.hash.substr(1)) || "1");
+        }
+
+        window.addEventListener("message", function (event) {
+            if (event.source == parent) {
+                chooseTab(unescape(self.location.hash.substr(1)));
+            }
+        }, false);
+    </script>
+
+</head>
+
+<body id="level3">
+    <div id="header">
+        <img id="logo" src="{{ url_for('static', filename='logos/level3.png') }}">
+        <span>Take a tour of our cloud data center.</span>
+    </div>
+
+    <div class="tab" id="tab1">Image 1</div>
+    <div class="tab" id="tab2">Image 2</div>
+    <div class="tab" id="tab3">Image 3</div>
+
+    <div id="tabContent"> </div>
+
+    <!-- Add the non-inline JavaScript here -->
+    <script nonce="random-value-here">
+        document.addEventListener('DOMContentLoaded', function () {
+            // Get all elements with the class "tab"
+            var tabs = document.querySelectorAll('.tab');
+
+            // Add a click event listener to each tab
+            tabs.forEach(function (tab) {
+                tab.addEventListener('click', function () {
+                    // Extract the number from the tab's ID (e.g., "tab1" -> "1")
+                    var num = this.id.replace('tab', '');
+                    chooseTab(num);
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>
+

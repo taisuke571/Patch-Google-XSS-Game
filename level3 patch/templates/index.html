@@ -1,0 +1,56 @@
+<!doctype html>
+<html>
+  <head>
+    <!-- Internal game scripts/styles, mostly boring stuff -->
+    <script src="{{ url_for('static', filename='game-frame.js') }}"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='game-frame-styles.css') }}" />
+ 
+    <!-- Load jQuery -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+ 
+    <script>
+ function chooseTab(num) {
+    // Ensure num is a number
+    num = parseInt(num);
+    if (isNaN(num) || num < 1 || num > 3) { // Assuming you have 3 images
+        num = 1;
+    }
+
+    var html = "Image " + num + "<br>";
+    html += "<img src='/static/level3/cloud" + num + ".jpg' />";
+    $('#tabContent').html(html);
+
+    window.location.hash = num;
+
+    var tabs = document.querySelectorAll('.tab');
+    for (var i = 0; i < tabs.length; i++) {
+        if (tabs[i].id == "tab" + num) {
+            tabs[i].className = "tab active";
+        } else {
+            tabs[i].className = "tab";
+        }
+    }
+
+    top.postMessage(self.location.toString(), "*");
+}
+
+window.onload = function() { 
+    var num = window.location.hash.substr(1) || "1";
+    chooseTab(num);
+}
+    </script>
+ 
+  </head>
+  <body id="level3">
+    <div id="header">
+      <img id="logo" src="{{ url_for('static', filename='logos/level3.png') }}">
+      <span>Take a tour of our cloud data center.</span>
+    </div>
+ 
+    <div class="tab" id="tab1" onclick="chooseTab('1')">Image 1</div>
+    <div class="tab" id="tab2" onclick="chooseTab('2')">Image 2</div>
+    <div class="tab" id="tab3" onclick="chooseTab('3')">Image 3</div>
+ 
+    <div id="tabContent"> </div>
+  </body>
+</html>
